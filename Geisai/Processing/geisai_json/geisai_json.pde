@@ -22,7 +22,7 @@ void draw() {
 
   if (test_mode==1){
     setuzoku_log();
-  }else{
+  }else if (test_mode==0){
     sensor_api();
     byouga("x",str(x),"y",str(y),"z",str(z));
   }
@@ -38,17 +38,28 @@ void byouga(String title1,String val1,String title2,String val2,String title3,St
 
 
 
+
+
 void sensor_api(){
   GetRequest get = new GetRequest(URL);
   get.send();
 
-  JSONArray result = parseJSONArray(get.getContent());
-  JSONObject r0 = result.getJSONObject(0);
-  float x = r0.getFloat("x");
-  float y = r0.getFloat("y");
-  float z = r0.getFloat("z");
+  String get_r = get.getContent();
+  println(get_r);
 
-  println("x:"+x+",y:"+y+",z:"+z);
+  if (get_r=="0.0"){
+    println("a");
+  }else if (float(get_r)==0.0){
+    println("b");
+  }
+
+    // JSONArray result = parseJSONArray(get.getContent());
+    // JSONObject r0 = result.getJSONObject(0);
+    // x = r0.getFloat("x");
+    // y = r0.getFloat("y");
+    // z = r0.getFloat("z");
+    //
+    // println("x:"+x+",y:"+y+",z:"+z);
 }
 
 void setuzoku_log(){
@@ -64,4 +75,10 @@ void setuzoku_log(){
   String OS = r0.getString("OS");
   println("id"+id+"time"+time);
   println("device"+device+"OS"+OS);
+}
+
+void string_test (){
+  String src="あさが来た";
+  String sub = src.substring(0,1);
+  println(sub); //<--(0)と表示
 }
