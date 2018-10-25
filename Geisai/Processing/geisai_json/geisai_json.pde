@@ -1,4 +1,6 @@
 import http.requests.*;
+import codeanticode.syphon.*;
+SyphonServer server;
 
 float x;
 float y;
@@ -16,9 +18,15 @@ String URL = "https://node-test-razona.c9users.io/json"; //node.jsサーバー
 int test_mode = 0;
 String net_status="undeifind";
 
+void settings() {
+  size(720, 400, P3D);
+  PJOGL.profile=1;
+}
+
+
 void setup() {
-  size(720,400);
   background(0);
+  server = new SyphonServer(this, "Processing Syphon");
 }
 
 void draw() {
@@ -35,7 +43,7 @@ void draw() {
       disconect();
     }
   }
-
+  server.sendScreen();  
 }
 
 //ネットワークエラー用画面
@@ -84,7 +92,7 @@ void sensor_api(){
                   gz = r0.getFloat("gz");
                   hosuu = r0.getInt("hosuu");
                   version = r0.getString("version");
-                  id = r0.getInt("id");
+                  //id = r0.getInt("id");
                   net_status="conect";
                   println("x:"+x+",y:"+y+",z:"+z);
             }
