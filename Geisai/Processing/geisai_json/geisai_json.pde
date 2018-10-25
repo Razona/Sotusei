@@ -17,16 +17,17 @@ String URL = "https://node-test-razona.c9users.io/json"; //node.jsサーバー
 
 int test_mode = 0;
 String net_status="undeifind";
-
-void settings() {
-  size(720, 400, P3D);
-  PJOGL.profile=1;
-}
+//
+// void settings() {
+//   size(1920, 1080, P3D);
+//   PJOGL.profile=1;
+// }
 
 
 void setup() {
   background(0);
-  server = new SyphonServer(this, "Processing Syphon");
+  size(720, 400);
+  // server = new SyphonServer(this, "Processing Syphon");
 }
 
 void draw() {
@@ -43,7 +44,7 @@ void draw() {
       disconect();
     }
   }
-  server.sendScreen();  
+  // server.sendScreen();
 }
 
 //ネットワークエラー用画面
@@ -54,6 +55,13 @@ void disconect(){
 
 //通常時の描画制御
 void byouga(String title1,String val1,String title2,String val2,String title3,String val3){
+  noStroke();
+  rect(100,100,100,300);
+  // println(x);
+}
+
+
+void byouga_test(String title1,String val1,String title2,String val2,String title3,String val3){
   text(title1 + ":"+ val1,350,100);
   text(title2 + ":"+ val2,350,200);
   text(title3 + ":"+ val3,350,300);
@@ -95,6 +103,7 @@ void sensor_api(){
                   //id = r0.getInt("id");
                   net_status="conect";
                   println("x:"+x+",y:"+y+",z:"+z);
+                  saveJSONArray(result,"data/person.json");
             }
       }
 }
