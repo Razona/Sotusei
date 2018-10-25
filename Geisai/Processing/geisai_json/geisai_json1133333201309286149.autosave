@@ -7,8 +7,8 @@ float gx;
 float gy;
 float gz;
 int hosuu;
-String version;
-int id;
+String id;
+String device;
 
 // String URL = "https://geisai-server-razona.c9users.io"; //rubyサーバー
 String URL = "https://node-test-razona.c9users.io/json"; //node.jsサーバー
@@ -65,7 +65,7 @@ void sensor_api(){
 
     println(get_r);
 
-    if (get_r==null||get_r=="undeifind"){
+    if (get_r==null){
       net_status="disconect";
       println("disconect");
           }else {
@@ -82,9 +82,6 @@ void sensor_api(){
                   gx = r0.getFloat("gx");
                   gy = r0.getFloat("gy");
                   gz = r0.getFloat("gz");
-                  hosuu = r0.getInt("hosuu");
-                  version = r0.getString("version");
-                  id = r0.getInt("id");
                   net_status="conect";
                   println("x:"+x+",y:"+y+",z:"+z);
             }

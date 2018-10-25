@@ -3,18 +3,13 @@ import http.requests.*;
 float x;
 float y;
 float z;
-float gx;
-float gy;
-float gz;
-int hosuu;
-String version;
-int id;
+
 
 // String URL = "https://geisai-server-razona.c9users.io"; //rubyサーバー
 String URL = "https://node-test-razona.c9users.io/json"; //node.jsサーバー
 
 int test_mode = 0;
-String net_status="undeifind";
+String net_status="disconect";
 
 void setup() {
   size(720,400);
@@ -23,12 +18,14 @@ void setup() {
 
 void draw() {
   background(0);
+
   frameRate(10);
 
   if (test_mode==1){
     setuzoku_log();
   }else if (test_mode==0){
     sensor_api();
+    
     if (net_status=="conect"){
         byouga("x",str(x),"y",str(y),"z",str(z));
     }else if (net_status=="disconect"){
@@ -40,7 +37,6 @@ void draw() {
 
 //ネットワークエラー用画面
 void disconect(){
-  println("aaaa");
   text("現在、ネットワークのエラーが発生しております。",200,200);
 }
 
@@ -63,31 +59,22 @@ void sensor_api(){
     // println(get_r.length());
     // println(get_r.substring(0,1));
 
-    println(get_r);
+    if (get_r!=null){
 
-    if (get_r==null||get_r=="undeifind"){
-      net_status="disconect";
-      println("disconect");
+        String  kasiramozi = get_r.substring(0,1);
+
+        if (kasiramozi=="["){
+            JSONArray result = parseJSONArray(get.getContent());
+            JSONObject r0 = result.getJSONObject(0);
+            x = r0.getFloat("x");
+            y = r0.getFloat("y");
+            z = r0.getFloat("z");
+            net_status="conect";
+            println("x:"+x+",y:"+y+",z:"+z);
           }else {
-            String kasiramozi = get_r.substring(0,1);
-
-            if (get_r.length()==0){
-                println("a");
-              }else {
-                  JSONArray result = parseJSONArray(get.getContent());
-                  JSONObject r0 = result.getJSONObject(0);
-                  x = r0.getFloat("x");
-                  y = r0.getFloat("y");
-                  z = r0.getFloat("z");
-                  gx = r0.getFloat("gx");
-                  gy = r0.getFloat("gy");
-                  gz = r0.getFloat("gz");
-                  hosuu = r0.getInt("hosuu");
-                  version = r0.getString("version");
-                  id = r0.getInt("id");
-                  net_status="conect";
-                  println("x:"+x+",y:"+y+",z:"+z);
-            }
+            net_status="disconect";
+            println("disconect");
+        }
       }
 }
 
