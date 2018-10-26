@@ -12,22 +12,24 @@ int hosuu;
 String version;
 int id;
 
+float screanMode=0.5;
+
 // String URL = "https://geisai-server-razona.c9users.io"; //rubyサーバー
 String URL = "https://node-test-razona.c9users.io/json"; //node.jsサーバー
 
 int test_mode = 0;
 String net_status="undeifind";
 //
-  void settings() {
-   size(1920, 1080, P3D);
-   PJOGL.profile=1;
- }
+ //  void settings() {
+ //   size(1920, 1080, P3D);
+ //   PJOGL.profile=1;
+ // }
 
 
 void setup() {
   background(0);
-  //size(720, 400);
-   server = new SyphonServer(this, "Processing Syphon");
+  size(960, 540);
+   // server = new SyphonServer(this, "Processing Syphon");
 }
 
 void draw() {
@@ -44,13 +46,13 @@ void draw() {
       disconect();
     }
   }
-   server.sendScreen();
+   // server.sendScreen();
 }
 
 //ネットワークエラー用画面
 void disconect(){
   println("aaaa");
-  text("現在、ネットワークのエラーが発生しております。",200,200);
+  text("現在、ネットワークのエラーが発生しております。",200*screanMode,200*screanMode);
 }
 
 //通常時の描画制御
@@ -62,10 +64,10 @@ void byouga(String title1,String val1,String title2,String val2,String title3,St
 
 
 void byouga_test(String title1,String val1,String title2,String val2,String title3,String val3){
-  text(title1 + ":"+ val1,450,800);
-  text(title2 + ":"+ val2,450,900);
-  text(title3 + ":"+ val3,450,1000);
-  text("現在、ネットワークのエラーが発生しております。",500,600);
+  text(title1 + ":"+ val1,450*screanMode,800*screanMode);
+  text(title2 + ":"+ val2,450*screanMode,900*screanMode);
+  text(title3 + ":"+ val3,450*screanMode,1000*screanMode);
+  text("現在、ネットワークに接続しております。",700*screanMode,700*screanMode);
   // println(x);
 }
 
