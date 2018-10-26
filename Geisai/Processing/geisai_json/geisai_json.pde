@@ -13,55 +13,94 @@ float gz;
 int hosuu;
 String version;
 int id;
+boolean connect=false;
 
-float screanMode=1;
+// float screanMode=1;
+float screanMode=0.5;
 
 // String URL = "https://geisai-server-razona.c9users.io"; //rubyサーバー
 String URL = "https://node-test-razona.c9users.io/json"; //node.jsサーバー
+String URL0 = "https://node-test-razona.c9users.io/check"; //connectチェックAPI
 
 int test_mode = 0;
 String net_status="undeifind";
 //
-   void settings() {
-    size(1920, 1080, P3D);
-    PJOGL.profile=1;
-  }
+  //  void settings() {
+  //   size(1920, 1080, P3D);
+  //   PJOGL.profile=1;
+  // }
 
 
 void setup() {
   background(0);
-  //size(960, 540);
-    server = new SyphonServer(this, "Processing Syphon");
+  size(960, 540);
+    // server = new SyphonServer(this, "Processing Syphon");
 }
 
 void draw() {
   background(0);
   frameRate(10);
 
-  if (test_mode==1){
-    setuzoku_log();
-  }else if (test_mode==0){
+  connect_check();
+  if (connect == false){
+    println("失敗");
+  } else if (connect == true){
     sensor_api();
-    if (net_status=="conect"){
+    println("成功");
+    //connectなら描画関数を呼び出し、disconnectならdisconnect関数を呼び出す
+    if (net_status=="connect"){
         byouga_test("x",str(x),"y",str(y),"z",str(z));
-    }else if (net_status=="disconect"){
-      disconect();
+    }else if (net_status=="disconnect"){
+      disconnect();
     }
   }
-    server.sendScreen();
+
+
+
+  //test_modeかどうかの判定。
+  //sensor_apiでconnectかの判定&jsonからpurseした値の代入を行う
+  // if (test_mode==1){
+  //   setuzoku_log();
+  // }else if (test_mode==0){
+    // sensor_api();
+    // //connectなら描画関数を呼び出し、disconnectならdisconnect関数を呼び出す
+    // if (net_status=="connect"){
+    //     byouga_test("x",str(x),"y",str(y),"z",str(z));
+    // }else if (net_status=="disconnect"){
+    //   disconnect();
+    // }
+  // }
+
+  //syphonに送る
+    // server.sendScreen();
 }
 
 //ネットワークエラー用画面
-void disconect(){
+void disconnect(){
   println("aaaa");
   text("現在、ネットワークのエラーが発生しております。",200*screanMode,200*screanMode);
 }
 
+//socketの状態を判定する関数
+void connect_check(){
+  GetRequest get = new GetRequest(URL0);
+  get.send();
+
+  String get_r = get.getContent();
+  println(get_r);
+  connect = boolean(get_r);
+  println(connect);
+}
+
 //通常時の描画制御
-void byouga(String title1,String val1,String title2,String val2,String title3,String val3){
+void byouga_connect(String title1,String val1,String title2,String val2,String title3,String val3){
   noStroke();
-  rect(100,100,100,300);
+  rect(100*screanMode,100*screanMode,100*screanMode,300*screanMode);
   // println(x);
+}
+
+void byouga_disconnect(){
+
 }
 
 
@@ -89,8 +128,8 @@ void sensor_api(){
     println(get_r);
 
     if (get_r==null||get_r=="undeifind"){
-      net_status="disconect";
-      println("disconect");
+      net_status="disconnect";
+      println("disconnect");
           }else {
             String kasiramozi = get_r.substring(0,1);
 
@@ -108,7 +147,7 @@ void sensor_api(){
                   //hosuu = r0.getInt("hosuu");
                   version = r0.getString("version");
                   //id = r0.getInt("id");
-                  net_status="conect";
+                  net_status="connect";
                   println("x:"+x+",y:"+y+",z:"+z);
                   saveJSONArray(result,"data/person.json");
             }
