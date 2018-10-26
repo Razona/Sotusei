@@ -48,7 +48,7 @@ void draw() {
       disconect();
     }
   }
-   // server.sendScreen();
+    server.sendScreen();
 }
 
 //ネットワークエラー用画面
