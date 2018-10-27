@@ -107,9 +107,9 @@ void connect_check(){
 //通常時の描画制御
 void byouga_connect(){
   noStroke();
-  rect(1000*screanMode,600*screanMode,(460+x *100)*screanMode,60*screanMode);
-  rect(1000*screanMode,750*screanMode,(460+y *100)*screanMode,60*screanMode);
-  rect(1000*screanMode,900*screanMode,(460+z *100)*screanMode,60*screanMode);
+  rect(1000*screanMode,600*screanMode,(260+x *200)*screanMode,20*screanMode);
+  rect(1000*screanMode,750*screanMode,(260+y *200)*screanMode,20*screanMode);
+  rect(1000*screanMode,900*screanMode,(260+z *200)*screanMode,20*screanMode);
   // println(x);
 }
 
