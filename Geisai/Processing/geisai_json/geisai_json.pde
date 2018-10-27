@@ -21,8 +21,8 @@ boolean connect=false;
 //connect=falseからtrueに変わった瞬間に発火する
 boolean start = false;
 
-float screanMode=1;
-// float screanMode=0.5;
+// float screanMode=1;
+float screanMode=0.5;
 
 // String URL = "https://geisai-server-razona.c9users.io"; //rubyサーバー
 String URL = "https://node-test-razona.c9users.io/json"; //node.jsサーバー
@@ -31,17 +31,17 @@ String URL0 = "https://node-test-razona.c9users.io/check"; //connectチェック
 int test_mode = 0;
 String net_status="undeifind";
 //
-   void settings() {
-    size(1920, 1080, P3D);
-    PJOGL.profile=1;
-  }
+  //  void settings() {
+  //   size(1920, 1080, P3D);
+  //   PJOGL.profile=1;
+  // }
 
 
 void setup() {
   background(0);
-  // size(960, 540);
+  size(960, 540);
   movie = new Movie( this, "disconnect.mov");
-    server = new SyphonServer(this, "Processing Syphon");
+    // server = new SyphonServer(this, "Processing Syphon");
 }
 
 void draw() {
@@ -78,7 +78,7 @@ void draw() {
   // }
 
   //syphonに送る
-    server.sendScreen();
+    // server.sendScreen();
 }
 
 //映像フレーム毎に自動呼び出しされるイベント
@@ -107,7 +107,9 @@ void connect_check(){
 //通常時の描画制御
 void byouga_connect(){
   noStroke();
-  rect(100*screanMode,100*screanMode,100*screanMode,300*screanMode);
+  rect(1000*screanMode,600*screanMode,(460+x *100)*screanMode,60*screanMode);
+  rect(1000*screanMode,750*screanMode,(460+y *100)*screanMode,60*screanMode);
+  rect(1000*screanMode,900*screanMode,(460+z *100)*screanMode,60*screanMode);
   // println(x);
 }
 
