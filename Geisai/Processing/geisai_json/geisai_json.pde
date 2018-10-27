@@ -108,8 +108,9 @@ void connect_check(){
 void byouga_connect(){
   noStroke();
   rect(1000*screanMode,600*screanMode,(260+x *200)*screanMode,20*screanMode);
-  rect(1000*screanMode,750*screanMode,(260+y *200)*screanMode,20*screanMode);
-  rect(1000*screanMode,900*screanMode,(260+z *200)*screanMode,20*screanMode);
+  rect(1000*screanMode,650*screanMode,(260+y *200)*screanMode,20*screanMode);
+  rect(1000*screanMode,700*screanMode,(260+z *200)*screanMode,20*screanMode);
+
   // println(x);
 }
 
@@ -120,6 +121,7 @@ void byouga_disconnect(){
 
 
 void byouga_test(String title1,String val1,String title2,String val2,String title3,String val3){
+  textSize(30);
   text(title1 + ":"+ val1,450*screanMode,800*screanMode);
   text(title2 + ":"+ val2,450*screanMode,900*screanMode);
   text(title3 + ":"+ val3,450*screanMode,1000*screanMode);
