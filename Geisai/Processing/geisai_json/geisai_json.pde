@@ -1,7 +1,9 @@
+import processing.video.*;
+
 import http.requests.*;
 import codeanticode.syphon.*;
 SyphonServer server;
-
+Movie movie; //Movieインスタンス
 
 
 float x;
@@ -13,7 +15,11 @@ float gz;
 int hosuu;
 String version;
 int id;
+
+//socketのconnect判定
 boolean connect=false;
+//connect=falseからtrueに変わった瞬間に発火する
+boolean start = false;
 
 // float screanMode=1;
 float screanMode=0.5;
@@ -34,28 +40,28 @@ String net_status="undeifind";
 void setup() {
   background(0);
   size(960, 540);
+  movie = new Movie( this, "disconnect.mov");
     // server = new SyphonServer(this, "Processing Syphon");
 }
 
 void draw() {
   background(0);
-  frameRate(10);
 
   connect_check();
   if (connect == false){
+    byouga_disconnect();
     println("失敗");
   } else if (connect == true){
     sensor_api();
     println("成功");
     //connectなら描画関数を呼び出し、disconnectならdisconnect関数を呼び出す
     if (net_status=="connect"){
+        byouga_connect();
         byouga_test("x",str(x),"y",str(y),"z",str(z));
     }else if (net_status=="disconnect"){
       disconnect();
     }
   }
-
-
 
   //test_modeかどうかの判定。
   //sensor_apiでconnectかの判定&jsonからpurseした値の代入を行う
@@ -75,6 +81,12 @@ void draw() {
     // server.sendScreen();
 }
 
+//映像フレーム毎に自動呼び出しされるイベント
+void movieEvent( Movie m ) {
+ //カレント位置の画像を取得
+ m.read();
+}
+
 //ネットワークエラー用画面
 void disconnect(){
   println("aaaa");
@@ -87,20 +99,21 @@ void connect_check(){
   get.send();
 
   String get_r = get.getContent();
-  println(get_r);
+  // println(get_r);
   connect = boolean(get_r);
-  println(connect);
+  // println(connect);
 }
 
 //通常時の描画制御
-void byouga_connect(String title1,String val1,String title2,String val2,String title3,String val3){
+void byouga_connect(){
   noStroke();
   rect(100*screanMode,100*screanMode,100*screanMode,300*screanMode);
   // println(x);
 }
 
 void byouga_disconnect(){
-
+  image( movie, 1000*screanMode, 700*screanMode, 920*screanMode, 380*screanMode);
+  movie.loop();
 }
 
 
@@ -149,7 +162,6 @@ void sensor_api(){
                   //id = r0.getInt("id");
                   net_status="connect";
                   println("x:"+x+",y:"+y+",z:"+z);
-                  saveJSONArray(result,"data/person.json");
             }
       }
 }
