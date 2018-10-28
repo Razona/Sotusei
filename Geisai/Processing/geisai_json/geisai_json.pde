@@ -145,6 +145,9 @@ void byouga_connect(){
 void byouga_disconnect(){
   //image( movie, 1000*screanMode, 700*screanMode, 920*screanMode, 380*screanMode);
   //movie.loop();
+  textSize(100);
+  text("Please connect",740*screanMode,780*screanMode);
+
 }
 
 
