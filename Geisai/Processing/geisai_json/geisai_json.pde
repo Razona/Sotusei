@@ -1,3 +1,11 @@
+import netP5.*;
+import oscP5.*;
+
+//OSCP5クラスのインスタンス
+OscP5 oscP5;
+//OSC送出先のネットアドレス
+NetAddress myRemoteLocation;
+
 import processing.video.*;
 
 import http.requests.*;
@@ -40,7 +48,13 @@ String net_status="undeifind";
 void setup() {
   background(0);
   // size(960, 540);
-  movie = new Movie( this, "disconnect.mov");
+  //受信用の変数。右の数字はポート番号。送信側のポート番号とあわせる。
+  oscP5 = new OscP5(this,12000);
+
+  //送信用オブジェクト。左側の数字が相手のIPアドレス、右側が相手のポート番号。
+  myRemoteLocation = new NetAddress("127.0.0.1", 10000);
+
+  oscP5.plug(this,"getData","/sensor");
     server = new SyphonServer(this, "Processing Syphon");
 }
 
@@ -58,6 +72,7 @@ void draw() {
     if (net_status=="connect"){
         byouga_connect();
         byouga_test("x",str(x),"y",str(y),"z",str(z));
+        osc_send();
     }else if (net_status=="disconnect"){
       disconnect();
     }
@@ -79,6 +94,19 @@ void draw() {
 
   //syphonに送る
     server.sendScreen();
+}  //新規にメッセージ作成
+
+
+void osc_send(){
+  OscMessage msgx = new OscMessage("/x");
+  msgx.add(x); //X
+  //OSCメッセージ送信
+  //新規にメッセージ作成
+OscMessage msgy = new OscMessage("/y");
+msgy.add(y); //X座標の位置を追加
+
+  oscP5.send(msgx, myRemoteLocation);
+  oscP5.send(msgy, myRemoteLocation);
 }
 
 //映像フレーム毎に自動呼び出しされるイベント
