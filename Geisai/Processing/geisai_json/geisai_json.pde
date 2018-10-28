@@ -154,8 +154,8 @@ void byouga_test(String title1,String val1,String title2,String val2,String titl
   text(title2 + ":"+ val2,450*screanMode,900*screanMode);
   text(title3 + ":"+ val3,450*screanMode,1000*screanMode);
   // text("現在、ネットワークに接続しております。",700*screanMode,700*screanMode);
-  text("Now loading",700*screanMode,780*screanMode);
-  text("Network error",700*screanMode,800*screanMode);
+  text("Now loading",740*screanMode,780*screanMode);
+  text("Network error",740*screanMode,800*screanMode);
   // println(x);
 }
 
