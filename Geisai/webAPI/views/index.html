@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>屋内測位実証実験</title>
+    <style>
+      @import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
+      html, body{
+        font-size: 18px;
+        font-family: 'Noto Sans Japanese', sans-serif;
+        text-align: center;
+        background-color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+    </header>
+    <main>
+      <div>
+        <div id="acceleration">
+          <p> <span id="acc-x"></span></p>
+          <p><span id="acc-y"></span></p>
+          <p> <span id="acc-z"></span></p>
+        </div>
+        <div id="accelerationIncludingGravity">
+          
+          <p> <span id="acc-gx"></span></p>
+          <p> <span id="acc-gy"></span></p>
+          <p> <span id="acc-gz"></span></p>
+        </div>
+        <div id="rotationRate">
+          <p> <span id="rr-a"></span></p>
+          <p><span id="rr-b"></span></p>
+          <p><span id="rr-g"></span></p>
+        </div>
+      </div>
+    </main>
+    
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+  </body>
+</html>

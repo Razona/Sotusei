@@ -1,1 +1,1 @@
-exports.printFoo = function(){ return "foo" }
+exports.printFoo = function(){ return "いぇーい" }
