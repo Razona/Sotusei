@@ -1,0 +1,144 @@
+import netP5.*;
+import oscP5.*;
+
+float syukusyaku = 0.8;
+float map_x = 600*syukusyaku;
+float map_y = 900*syukusyaku;
+
+//体験者の初期位置
+float x=30;
+float y=900*syukusyaku -30 ;
+
+
+float mouseX_kako=0;
+float mouseY_kako=0;
+boolean idou_kyoka = false;
+
+//sim_mode:0はマウスで動かすモード,sim_mode:1はoscで受けた値を使って描画するモード
+int sim_mode = 0;
+
+void setup(){
+  //6m×9mの部屋を表現
+  //1cm=1という感じ
+  size(700,720);
+
+}
+
+void mouseReleased(){
+  idou_kyoka = false;
+  println("移動許可:"+false);
+}
+
+
+void draw(){
+  background(0);
+  iti_jouhou();
+
+  map_byouga();
+  point_byouga();
+
+  idou_kyoka();
+
+  jouhou_byouga();
+}
+
+//展示部屋の図を描画
+void map_byouga(){
+  fill(150);
+  rect(0,0,map_x,map_y);
+}
+
+//現在地を示す点を描画
+void point_byouga(){
+  fill(255);
+  ellipse(x,y,10,10);
+}
+
+//各種情報の描画
+void jouhou_byouga(){
+  fill(0,255,0);
+  float tate_soroe = 680;
+
+  text("管理用ツール v0.01",(tate_soroe+30)*syukusyaku,50*syukusyaku);
+
+  text("現在地",tate_soroe*syukusyaku,170*syukusyaku);
+  text("x:"+x,tate_soroe*syukusyaku,200*syukusyaku);
+  text("y:"+y,tate_soroe*syukusyaku,230*syukusyaku);
+
+  text("その他情報", tate_soroe*syukusyaku ,270*syukusyaku);
+  text("マウスX差分:"+mouseX_kako, tate_soroe*syukusyaku ,300*syukusyaku);
+  text("idou_kyoka:"+idou_kyoka, tate_soroe*syukusyaku ,330*syukusyaku);
+}
+
+//現在地の情報を更新
+void iti_jouhou (){
+  if (mouseButton == LEFT){
+    //_kakoの値のリフレッシュを行う
+    if (idou_kyoka == false){
+      mouseX_kako = mouseX;
+      mouseY_kako = mouseY;
+      idou_kyoka = true;
+    }
+
+    //sabun_x でmouseXとmousex_kakoを比較
+    //この関数の最後にmouseX_kakoに代入
+    float  sabun_x = mouseX - mouseX_kako;
+    float sabun_y = mouseY - mouseY_kako;
+    println("x:"+sabun_x);
+    println("過去x:"+mouseX_kako);
+    println("結果x"+x);
+    x = x + sabun_x;
+    y = y + sabun_y;
+
+    mouseX_kako = mouseX;
+    mouseY_kako = mouseY;
+  }
+
+  if (mouseButton == RIGHT){
+    //右クリックの場合、座標がクリックした場所にワープ
+    x = mouseX;
+    y = mouseY;
+  }
+
+}
+
+// iti_jouhouに関連して、移動許可を出す関数
+void idou_kyoka(){
+  if (mousePressed == false){
+    idou_kyoka = false;
+    // println("移動許可:"+false);
+  }
+}
+
+
+
+// float speed = 5.0;
+
+//
+// void keyPressed() {
+//
+//   if (key == CODED) {      // コード化されているキーが押された
+//
+//     if ((keyCode == RIGHT)&&(keyCode == UP)){
+//       x += speed;
+//       y -= speed;
+//     }else if ((keyCode == RIGHT)&&(keyCode == DOWN)){
+//       x += speed;
+//       y += speed;
+//     }else if ((keyCode == LEFT)&&(keyCode == UP)){
+//       x -= speed;
+//       y -= speed;
+//     }else if ((keyCode == LEFT)&&(keyCode == DOWN)){
+//       x -= speed;
+//       y += speed;
+//     }else if (keyCode == RIGHT) {    // キーコードを判定
+//           x += speed;
+//     } else if (keyCode == LEFT) {
+//            x -= speed;
+//     }else if (keyCode == UP){
+//       y -= speed;
+//     }else if (keyCode == DOWN){
+//       y += speed;
+//     }
+//   }
+// }

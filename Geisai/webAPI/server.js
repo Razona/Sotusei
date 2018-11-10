@@ -8,6 +8,8 @@ let ejs = require("ejs");
 let iconv = require('iconv-lite');
 var check = false;
 var id =0;
+const PORT = process.env.PORT || 3000;
+
 
 
 var json;
@@ -15,7 +17,10 @@ let counter=0;
 
 app.use(express.static(__dirname))
 
-server.listen(process.env.PORT);
+// server.listen(process.env.PORT);
+server.listen(PORT, () => console.log(`listening on *:${PORT}`));
+
+console.log("サーバーたちがった")
 
 
 app.get('/', (req, res)=> {
@@ -46,7 +51,7 @@ app.engine('ejs',ejs.renderFile);
 app.get('/json', function(req, res){
 
     var util = require('util');
-  
+
   res.send(json);
 });
 
@@ -80,13 +85,13 @@ io.sockets.on('connection', (socket)=>{
         console.log(check);
         id = id +1;
         console.log("id"+id);
-        
+
           //切断したときに送信
     socket.on("disconnect", function (){
         check = false;
         console.log(check);
      });
-   
+
     })
 })
 
@@ -109,6 +114,6 @@ io.sockets.on('connection', (socket)=>{
     socket.on('connect', (eventData)=>{
         console.log(counter);
         io.sockets.emit('id', {msg: counter});
-        
+
     })
 })
