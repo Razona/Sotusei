@@ -2,6 +2,7 @@ var util = require('util');
 
 var osc = require('node-osc');
 var client = new osc.Client('127.0.0.1', 10000);
+var client2 = new osc.Client('127.0.0.1', 3000);
 
 
 var io = require('socket.io-client');
@@ -16,13 +17,24 @@ socket.on('connect', () => {
       //msgの中身をobjからstringに変換
       val = util.inspect(msg);
 
-      client.send('/oscAddress', val, function () {
+      client.send('/socket', val, function () {
       });
+
+      client2.send('/socket', val, function () {
+      });
+
 
         console.log(`message: ${util.inspect(msg)}`);
     });
 
-    socket.on('conect_check',(msg)=> {
+    socket.on('connect_check',(msg)=> {
+      val = util.inspect(msg);
+
+      client.send('/connect_check',val,function(){
+      });
+      client2.send('/connect_check', val, function () {
+      });
+
       console.log(msg);
       });
 });
