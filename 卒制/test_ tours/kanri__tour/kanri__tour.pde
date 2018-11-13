@@ -33,7 +33,7 @@ void setup(){
 
   oscP5 = new OscP5(this,3000);//受信用のポートナンバー
   myRemoteLocation = new NetAddress("127.0.0.1",10000);//送信用のポートナンバー
-
+   oscP5.plug(this,"test","/test");
 }
 
 
@@ -128,8 +128,8 @@ void mouse_iti_jouhou (){
     x = mouseX;
     y = mouseY;
   }
-
 }
+
 
 // iti_jouhouに関連して、移動許可を出す関数
 void idou_kyoka(){
@@ -188,9 +188,6 @@ void mode_switch(){
 
     text("監視モード",710*syukusyaku,770*syukusyaku);
   }
-
-
-
 }
 
 //クリックされたら呼び出される
@@ -225,7 +222,7 @@ void oscEvent(OscMessage theOscMessage) {
   print(" addrpattern: "+theOscMessage.addrPattern());
   println(" typetag: "+theOscMessage.typetag());
 
-  theOscMessage.print();
+  // theOscMessage.print();
 }
 
 // float speed = 5.0;

@@ -17,14 +17,37 @@ socket.on('connect', () => {
       //msgの中身をobjからstringに変換
       val = util.inspect(msg);
 
-      client.send('/socket', val, function () {
+      client.send('/socket/all', val, function () {
+      });
+      client.send('/socket/x', msg['x'], function () {
+      });
+      client.send('/socket/y', msg['y'], function () {
+      });
+      client.send('/socket/z', msg['z'], function () {
+      });
+      client.send('/socket/gx', msg['gx'], function () {
+      });
+      client.send('/socket/gy', msg['gy'], function () {
+      });
+      client.send('/socket/gz', msg['gz'], function () {
+      });
+      client.send('/socket/a', msg['a'], function () {
+      });
+      client.send('/socket/b', msg['b'], function () {
+      });
+      client.send('/socket/g', msg['g'], function () {
+      });
+      client.send('/socket/hosuu', msg['hosuu'], function () {
       });
 
-      client2.send('/socket', val, function () {
+      client2.send('/test',"接続成功", function () {
+      });
+      client2.send('/socket/all', val, function () {
       });
 
-
-        console.log(`message: ${util.inspect(msg)}`);
+        // console.log(`message: ${util.inspect(msg)}`);
+        // console.log(msg);
+        console.log("x:"+msg['x']);
     });
 
     socket.on('connect_check',(msg)=> {
@@ -35,6 +58,6 @@ socket.on('connect', () => {
       client2.send('/connect_check', val, function () {
       });
 
-      console.log(msg);
+      // console.log(msg);
       });
 });
