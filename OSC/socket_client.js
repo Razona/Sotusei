@@ -47,7 +47,7 @@ socket.on('connect', () => {
 
         // console.log(`message: ${util.inspect(msg)}`);
         // console.log(msg);
-        console.log("x:"+msg['x']);
+        console.log("x:"+msg['x']+"y:"+msg['y']+"z:"+msg['z']+"歩数:"+msg['hosuu']);
     });
 
     socket.on('connect_check',(msg)=> {
